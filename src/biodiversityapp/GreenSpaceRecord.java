@@ -9,7 +9,7 @@ package biodiversityapp;
  * @author adamk
  */
 public class GreenSpaceRecord extends BiodiversityRecord{
-    private String type;
+   private String type;
     private double area;
     public GreenSpaceRecord(String id, String name, String location, String observer,
                             String type, double area) {
