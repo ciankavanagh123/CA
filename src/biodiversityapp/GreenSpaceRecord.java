@@ -8,6 +8,15 @@ package biodiversityapp;
  *
  * @author adamk
  */
-public class GreenSpaceRecord {
-    
+public class GreenSpaceRecord extends BiodiversityRecord{
+    private String type;
+    private double area;
+    public GreenSpaceRecord(String id, String name, String location, String observer,
+                            String type, double area) {
+        super(id, name, location, observer);
+        this.type = type;
+        this.area = area;
+    }
+    @Override
+    public String getRecordType() { return "Green Space"; }
 }

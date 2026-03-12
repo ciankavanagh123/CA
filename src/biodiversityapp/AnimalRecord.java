@@ -8,6 +8,14 @@ package biodiversityapp;
  *
  * @author adamk
  */
-public class AnimalRecord {
-    
+public class AnimalRecord extends BiodiversityRecord {
+    private String species, habitat;
+    public AnimalRecord(String id, String name, String location, String observer,
+                        String species, String habitat) {
+        super(id, name, location, observer);
+        this.species = species;
+        this.habitat = habitat;
+    }
+    @Override
+    public String getRecordType() { return "Animal"; }
 }
