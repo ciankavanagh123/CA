@@ -15,6 +15,9 @@ public class BioDiversityApp {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        MainGUI mygui = new MainGUI();
+        mygui.setVisible(true);
+        
     }
     
 }
