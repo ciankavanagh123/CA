@@ -4,10 +4,30 @@
  */
 package biodiversityapp;
 
+import java.util.Stack;
+
 /**
  *
  * @author adamk
  */
-public class RecentActivityManager {
-    
+
+
+public class RecentActivityManager implements RecentActivity<BiodiversityRecord> {
+    private Stack<BiodiversityRecord> stack = new Stack<>();
+
+    @Override
+    public void pushActivity(BiodiversityRecord record) { stack.push(record); }
+
+    @Override
+    public BiodiversityRecord popActivity() {
+        return stack.isEmpty() ? null : stack.pop();
+    }
+
+    @Override
+    public boolean hasActivity() { return !stack.isEmpty(); }
+
+    @Override
+    public int getActivityCount() { return stack.size(); }
 }
+
+
