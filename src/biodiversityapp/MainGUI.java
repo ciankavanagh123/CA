@@ -4,17 +4,32 @@
  */
 package biodiversityapp;
 
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author adamk
  */
 public class MainGUI extends javax.swing.JFrame {
-
+// Managers for our 3 ADTs
+    private RecordManager recordManager = new RecordManager();      // ArrayList
+    private ReportManager reportManager = new ReportManager();      // Queue
+    private RecentActivityManager activityManager = new RecentActivityManager(); // Stack
+    
+    // GUI Components
+    private JComboBox<String> cmbType;
+    private JTextField txtName, txtLocation, txtObserver, txtSearch;
+    private JTable tblRecords;
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -40,12 +55,13 @@ public class MainGUI extends javax.swing.JFrame {
         txtName = new javax.swing.JTextField();
         txtLocation = new javax.swing.JTextField();
         txtObserver = new javax.swing.JTextField();
-        tblRecords = new javax.swing.JScrollPane();
         btnSearch = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         btnUndo = new javax.swing.JButton();
         btnProcessReport = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
 
         jTextField1.setText("jTextField1");
 
@@ -54,10 +70,25 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel1.setText("BioDiversity");
 
         btnCreate.setText("CREATE");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         btnDelete.setText("DELETE");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("UPDATE");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         btnSave.setText("SAVE");
 
@@ -83,6 +114,19 @@ public class MainGUI extends javax.swing.JFrame {
         btnUndo.setText("UNDO LAST NAME");
 
         btnProcessReport.setText("PROCESS NEXT REPORT");
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,29 +162,31 @@ public class MainGUI extends javax.swing.JFrame {
                                 .addComponent(btnSearch)
                                 .addGap(30, 30, 30)
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(tblRecords, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnCreate)
-                                    .addGap(58, 58, 58)
-                                    .addComponent(btnUpdate)
-                                    .addGap(60, 60, 60)
-                                    .addComponent(btnDelete)
-                                    .addGap(45, 45, 45)
-                                    .addComponent(btnSave))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnCreate)
+                                .addGap(58, 58, 58)
+                                .addComponent(btnUpdate)
+                                .addGap(60, 60, 60)
+                                .addComponent(btnDelete)
+                                .addGap(45, 45, 45)
+                                .addComponent(btnSave)))))
                 .addContainerGap(72, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(124, 124, 124)
                 .addComponent(btnUndo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnProcessReport)
                 .addGap(86, 86, 86))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(261, Short.MAX_VALUE)
@@ -176,9 +222,9 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSearch)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(tblRecords, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUndo)
                     .addComponent(btnProcessReport))
@@ -196,6 +242,59 @@ public class MainGUI extends javax.swing.JFrame {
     private void cmbTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbTypeActionPerformed
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        // TODO add your handling code here:
+        String id = java.util.UUID.randomUUID().toString().substring(0, 6);
+    String type = cmbType.getSelectedItem().toString();
+    String name = txtName.getText().trim();
+    String location = txtLocation.getText().trim();
+    String observer = txtObserver.getText().trim();
+    if (name.isEmpty() || location.isEmpty() || observer.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields!");
+        return;
+    }
+    BiodiversityRecord record;
+    switch (type) {
+        case "Plant" -> record = new PlantRecord(id, name, location, observer, "Unknown", "Green");
+        case "Animal" -> record = new AnimalRecord(id, name, location, observer, "Unknown", "Habitat");
+        default -> record = new GreenSpaceRecord(id, name, location, observer, "Park", 5.0);
+    }
+    recordManager.create(record);
+    activityManager.pushActivity(record);
+    reportManager.addReport("Added " + record.getRecordType() + " " + name);
+    refreshTable();
+    clearForm();
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+        int row = tblRecords.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Select a row first.");
+        return;
+    }
+    String id = tableModel.getValueAt(row, 0).toString();
+    BiodiversityRecord record = recordManager.read(id);
+    if (record != null) {
+        record.setName(txtName.getText().trim());
+        record.setLocation(txtLocation.getText().trim());
+        recordManager.update(id, record);
+    }
+    refreshTable();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+        int row = tblRecords.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(this, "Select a row first.");
+        return;
+    }
+    String id = tableModel.getValueAt(row, 0).toString();
+    recordManager.delete(id);
+    refreshTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,8 +346,9 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JScrollPane tblRecords;
     private javax.swing.JTextField txtLocation;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtObserver;
