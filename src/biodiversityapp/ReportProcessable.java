@@ -8,7 +8,9 @@ package biodiversityapp;
  *
  * @author adamk
  */
-public class ReportProcessable {
+public interface ReportProcessable {
     void addReport(String report);
     String processNextReport();
+    boolean hasReports();
+    int getReportCount();
 }

@@ -10,4 +10,5 @@ package biodiversityapp;
  */
 public interface RecentActivity<T> {
     void pushActivity(T record);
+    T pop
 }
