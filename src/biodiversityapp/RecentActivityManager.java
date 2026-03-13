@@ -8,9 +8,6 @@ package biodiversityapp;
  *
  * @author adamk
  */
-public interface RecentActivity<T> {
-    void pushActivity(T record);
-    T popActivity();
-    boolean hasActivity();
-    int getActivityCount();
+public class RecentActivityManager {
+    
 }

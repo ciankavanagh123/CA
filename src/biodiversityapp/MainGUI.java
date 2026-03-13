@@ -27,11 +27,11 @@ public class MainGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        CreateTF = new javax.swing.JButton();
+        DeleteTF = new javax.swing.JButton();
+        SearchTF = new javax.swing.JButton();
+        EditTF = new javax.swing.JButton();
+        SaveTF = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
@@ -45,17 +45,17 @@ public class MainGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setText("BioDiversity");
 
-        jButton1.setText("jButton1");
+        CreateTF.setText("CREATE");
 
-        jButton2.setText("jButton1");
+        DeleteTF.setText("DELETE");
 
-        jButton3.setText("jButton1");
+        SearchTF.setText("SEARCH");
 
-        jButton4.setText("jButton1");
+        EditTF.setText("EDIT");
 
-        jButton5.setText("jButton1");
+        SaveTF.setText("SAVE");
 
         jButton6.setText("jButton1");
 
@@ -87,17 +87,13 @@ public class MainGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(236, 236, 236)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(62, 62, 62)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
+                    .addComponent(DeleteTF)
+                    .addComponent(CreateTF)
+                    .addComponent(SearchTF)
+                    .addComponent(EditTF)
+                    .addComponent(SaveTF)
                     .addComponent(jButton6)
                     .addComponent(jButton7)
                     .addComponent(jButton8))
@@ -115,6 +111,10 @@ public class MainGUI extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(208, 208, 208)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 242, Short.MAX_VALUE)
@@ -124,20 +124,20 @@ public class MainGUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(39, 39, 39)
-                .addComponent(jButton1)
+                .addGap(71, 71, 71)
+                .addComponent(CreateTF)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addComponent(jButton2)
+                        .addComponent(DeleteTF)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(SearchTF)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton4)
+                        .addComponent(EditTF)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5)
+                        .addComponent(SaveTF)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6)
                         .addGap(18, 18, 18)
@@ -211,11 +211,11 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton CreateTF;
+    private javax.swing.JButton DeleteTF;
+    private javax.swing.JButton EditTF;
+    private javax.swing.JButton SaveTF;
+    private javax.swing.JButton SearchTF;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
