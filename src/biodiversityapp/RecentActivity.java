@@ -8,6 +8,6 @@ package biodiversityapp;
  *
  * @author adamk
  */
-public class RecentActivity {
-    
+public interface RecentActivity<T> {
+    void pushActivity(T record);
 }

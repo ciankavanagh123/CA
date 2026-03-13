@@ -9,5 +9,6 @@ package biodiversityapp;
  * @author adamk
  */
 public class ReportProcessable {
-    
+    void addReport(String report);
+    String processNextReport();
 }
