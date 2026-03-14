@@ -8,9 +8,18 @@ package biodiversityapp;
  *
  * @author adamk
  */
+
+
+import java.util.List;
+
 public interface ReportProcessable {
     void addReport(String report);
     String processNextReport();
     boolean hasReports();
     int getReportCount();
+
+    List<String> readAllReports();
+    boolean updateReport(String oldReport, String newReport);
+    boolean deleteReport(String report);
 }
+       

@@ -4,12 +4,8 @@
  */
 package biodiversityapp;
 
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author adamk
@@ -19,17 +15,19 @@ public class MainGUI extends javax.swing.JFrame {
     private RecordManager recordManager = new RecordManager();      // ArrayList
     private ReportManager reportManager = new ReportManager();      // Queue
     private RecentActivityManager activityManager = new RecentActivityManager(); // Stack
-    
+    private DefaultTableModel tableModel;
     // GUI Components
-    private JComboBox<String> cmbType;
-    private JTextField txtName, txtLocation, txtObserver, txtSearch;
-    private JTable tblRecords;
+   
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
         setLocationRelativeTo(null);
+        tableModel = new DefaultTableModel(
+        new String[]{"ID", "Type", "Name", "Location", "Observer"}, 0
+    );
+    jTable1.setModel(tableModel);
     }
 
     /**
@@ -57,11 +55,10 @@ public class MainGUI extends javax.swing.JFrame {
         txtObserver = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         btnUndo = new javax.swing.JButton();
         btnProcessReport = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         jTextField1.setText("jTextField1");
 
@@ -108,14 +105,27 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel6.setText("OBSERVER");
 
         btnSearch.setText("SEARCH");
-
-        jButton1.setText("jButton1");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         btnUndo.setText("UNDO LAST NAME");
+        btnUndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUndoActionPerformed(evt);
+            }
+        });
 
         btnProcessReport.setText("PROCESS NEXT REPORT");
+        btnProcessReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProcessReportActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -126,7 +136,7 @@ public class MainGUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable2);
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -164,34 +174,26 @@ public class MainGUI extends javax.swing.JFrame {
                                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnCreate)
-                                .addGap(58, 58, 58)
+                                .addGap(59, 59, 59)
                                 .addComponent(btnUpdate)
-                                .addGap(60, 60, 60)
+                                .addGap(59, 59, 59)
                                 .addComponent(btnDelete)
                                 .addGap(45, 45, 45)
-                                .addComponent(btnSave)))))
-                .addContainerGap(72, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(btnUndo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnProcessReport)
-                .addGap(86, 86, 86))
+                                .addComponent(btnSave))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(80, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(txtLocation, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(261, Short.MAX_VALUE)
-                    .addComponent(jButton1)
-                    .addContainerGap(261, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(124, 124, 124)
+                .addComponent(btnUndo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnProcessReport)
+                .addGap(86, 86, 86))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,25 +217,20 @@ public class MainGUI extends javax.swing.JFrame {
                 .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreate)
-                    .addComponent(btnUpdate)
                     .addComponent(btnDelete)
-                    .addComponent(btnSave))
+                    .addComponent(btnSave)
+                    .addComponent(btnUpdate))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSearch)
                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUndo)
                     .addComponent(btnProcessReport))
                 .addGap(47, 47, 47))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(260, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(237, Short.MAX_VALUE)))
         );
 
         pack();
@@ -269,7 +266,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-        int row = tblRecords.getSelectedRow();
+        int row = jTable1.getSelectedRow();
     if (row < 0) {
         JOptionPane.showMessageDialog(this, "Select a row first.");
         return;
@@ -286,7 +283,7 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-        int row = tblRecords.getSelectedRow();
+        int row = jTable1.getSelectedRow();
     if (row < 0) {
         JOptionPane.showMessageDialog(this, "Select a row first.");
         return;
@@ -296,6 +293,79 @@ public class MainGUI extends javax.swing.JFrame {
     refreshTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUndoActionPerformed
+        // TODO add your handling code here:
+        
+    BiodiversityRecord undone = activityManager.popActivity();
+    if (undone != null)
+        JOptionPane.showMessageDialog(this, "Undid: " + undone);
+    else
+        JOptionPane.showMessageDialog(this, "No recent action to undo.");
+    }//GEN-LAST:event_btnUndoActionPerformed
+
+    private void btnProcessReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcessReportActionPerformed
+        // TODO add your handling code here:
+        String report = reportManager.processNextReport();
+    if (report != null)
+        JOptionPane.showMessageDialog(this, "Processed Report: " + report);
+    else
+        JOptionPane.showMessageDialog(this, "No reports to process.");
+    }//GEN-LAST:event_btnProcessReportActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // TODO add your handling code here:
+                                             
+    String keyword = txtSearch.getText().trim();
+
+    if (keyword.isEmpty()) {
+        refreshTable();
+        JOptionPane.showMessageDialog(this, "Showing all records.");
+        return;
+    }
+
+    java.util.List<BiodiversityRecord> results = recordManager.searchByLocation(keyword);
+
+    tableModel.setRowCount(0); // clear table
+
+    if (results.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No records found.");
+        return;
+    }
+
+    for (BiodiversityRecord record : results) {
+        tableModel.addRow(new Object[]{
+            record.getId(),
+            record.getRecordType(),
+            record.getName(),
+            record.getLocation(),
+            record.getObserver()
+        });
+    
+}
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    
+    private void refreshTable() {
+    tableModel.setRowCount(0); // clear existing rows
+
+    for (BiodiversityRecord record : recordManager.readAll()) {
+        tableModel.addRow(new Object[] {
+            record.getId(),
+            record.getRecordType(),
+            record.getName(),
+            record.getLocation(),
+            record.getObserver()
+        });
+    }
+}
+
+private void clearForm() {
+    txtName.setText("");
+    txtLocation.setText("");
+    txtObserver.setText("");
+    txtSearch.setText("");
+    cmbType.setSelectedIndex(0);
+}
     /**
      * @param args the command line arguments
      */
@@ -340,14 +410,13 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnUndo;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cmbType;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtLocation;
     private javax.swing.JTextField txtName;
